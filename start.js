@@ -22,18 +22,19 @@ function $cet(ele, txt) {
 
 
 let data = {
+    css:"pathtocss.css",
     init: ['Select?', '', 'A', 'B'],
     A: [' A Select?', '', 'AA', 'AB'],
     B: ['B Select?', '', 'B', 'A'],
     AB: ['AB Select?', '', 'ABA', 'ABB', 'ABC']
   }
 
-  let data2 = {
-    init: ['Select?', '', 'A', 'B'],
-    A: [' A Select?', 'AA', 'AB'],
-    B: ['B Select?', 'B', 'A'],
-    AB: ['AB Select?', 'ABA', 'ABB', 'ABC']
-  }
+let data2 = {
+init: ['Select?', '', 'A', 'B'],
+A: [' A Select?', 'AA', 'AB'],
+B: ['B Select?', 'B', 'A'],
+AB: ['AB Select?', 'ABA', 'ABB', 'ABC']
+}
 
 function createMofo(field) {
     let mofo = $ce('div')
