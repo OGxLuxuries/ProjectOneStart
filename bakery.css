@@ -1,0 +1,65 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+body {
+    background-image: url("https://freerangestock.com/sample/36401/green-and-white-tablecloth-pattern.jpg");
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.mofo {
+    width: 300px;
+    border-radius: 5px;
+    background-color: bisque;
+    text-align: center;
+
+}
+.mofo h1 {
+    color: rgb(193, 141, 73);
+}
+
+/* General styling for the select menu */
+select {
+    width: 250px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #f8f9fa; /* light background */
+    border: 2px solid #6c757d; /* gray border */
+    border-radius: 5px;
+    color: #495057; /* dark text */
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Hover effect on the select menu */
+select:hover {
+    border-color: #007bff; /* change border to blue on hover */
+    background-color: #e9ecef; /* slight change in background color */
+}
+
+/* Focused select menu (when it's clicked) */
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* glowing blue border on focus */
+}
+
+/* Styling the options inside the select menu */
+option {
+    padding: 10px;
+    background-color: #fff; /* white background for options */
+    color: #495057; /* same dark text */
+}
+
+/* Disabled options (grayed out) */
+option:disabled {
+    color: #adb5bd;
+}
+
+/* Style for selected option (hovered over) */
+select option:hover {
+    background-color: #007bff; /* highlight blue on hover */
+    color: #fff; /* white text when highlighted */
+}
