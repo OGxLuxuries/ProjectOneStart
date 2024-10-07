@@ -1,31 +1,33 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Russo+One&display=swap');
 
 body {
-    background-image: url("https://freerangestock.com/sample/36401/green-and-white-tablecloth-pattern.jpg");
-    font-family: "Oswald", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 300;
+    background-image: url("alex-ai.jpg");
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
     font-style: normal;
 }
 
 .mofo {
-    width: 300px;
+    width: 310px;
     border-radius: 5px;
-    background-color: bisque;
+    background-color: grey;
     text-align: center;
+    border: 2px solid lightskyblue;
 
 }
 .mofo h1 {
-    color: rgb(193, 141, 73);
+    
+    font-size: 24px;
+    margin-top: 1em;
 }
 
 select {
     width: 80%;
     padding: 10px;
     font-size: 16px;
-    background-color: #f8f9fa; 
-    border: 2px solid rgb(193, 141, 73); 
+    background-color: grey; 
+    border: 2px solid lightskyblue; 
     border-radius: 5px;
     color: #495057; 
     cursor: pointer;

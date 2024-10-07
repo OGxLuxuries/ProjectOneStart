@@ -21,10 +21,12 @@ function $cet(ele, txt) {
   }
 
 let dataset = {};
+let currentChoices = []; 
 
 let dataBakery = {
     css: "bakery.css",
-    init: ['Select Item', '', 'Bread', 'Pastries', 'Cakes', 'Cupcakes'],
+    init: ['Carb Category', '', 'Bread', 'Pastries', 'Cakes', 'Cupcakes'],
+    title: "Oliver's Bakery",
     
     // Bread category is now only two selections deep
     Bread: ['Bread Type', '', 'Sourdough', 'Baguette'],
@@ -56,12 +58,36 @@ let dataBakery = {
 
 
 
-let dataFootball = {
-init: ['Select?', '', 'A', 'B'],
-A: [' A Select?', 'AA', 'AB'],
-B: ['B Select?', 'B', 'A'],
-AB: ['AB Select?', 'ABA', 'ABB', 'ABC']
-}
+let dataTechStore = {
+    css: "techstore.css",
+    init: ['Product Category', '', 'Laptops', 'Smartphones', 'Tablets', 'Accessories'],
+    title: "Oliver's Tech Store",
+    
+    // Laptops category
+    Laptops: ['Laptop Brand', '', 'Apple', 'Dell', 'HP'],
+    Apple: ['Model', '', 'MacBook Air', 'MacBook Pro'],
+    Dell: ['Model', '', 'XPS 13', 'XPS 15', 'Inspiron 15'],
+    HP: ['Model', '', 'Pavilion', 'Spectre', 'Envy'],
+    
+    // Smartphones category
+    Smartphones: ['Smartphone Brand', '', 'Apple', 'Samsung', 'Google'],
+    'Apple Smartphone': ['Model', '', 'iPhone 12', 'iPhone 13', 'iPhone 14'],
+    'Samsung Smartphone': ['Model', '', 'Galaxy S21', 'Galaxy Note 20', 'Galaxy Z Fold'],
+    'Google Smartphone': ['Model', '', 'Pixel 6', 'Pixel 5', 'Pixel 4a'],
+    
+    // Tablets category
+    Tablets: ['Tablet Brand', '', 'Apple', 'Samsung', 'Microsoft'],
+    'Apple Tablet': ['Model', '', 'iPad', 'iPad Pro', 'iPad Air'],
+    'Samsung Tablet': ['Model', '', 'Galaxy Tab S7', 'Galaxy Tab A7'],
+    'Microsoft Tablet': ['Model', '', 'Surface Pro 7', 'Surface Go 2'],
+    
+    // Accessories category
+    Accessories: ['Accessory Type', '', 'Headphones', 'Chargers', 'Cases'],
+    Headphones: ['Brand', '', 'Sony', 'Bose', 'Apple'],
+    Chargers: ['Type', '', 'USB-C', 'Lightning', 'Wireless'],
+    Cases: ['Device', '', 'Laptop Case', 'Phone Case', 'Tablet Case'],
+};
+
 
 function createCSS(path) {
     let sheet = $ce('link')
@@ -74,14 +100,9 @@ function createMofo(field) {
     let mofo = $ce('div')
     mofo.setAttribute("class", "mofo")
     mofo.style.position = 'relative';
-    mofo.style.left = 0 + 'px';
-    mofo.style.top = -100 + 'px';
-    mofo.style.opacity = 0;
-    mofo.onload = requestAnimationFrame(
-        function () {
-            dropInMofo(mofo);
-        }
-    )
+    mofo.style.left = -375 + 'px';
+    mofo.style.top = 0 + 'px';
+    mofo.style.opacity = 0.1;     
         
     if (field) {
         let h = $cet("h1", field[0]);
@@ -95,65 +116,76 @@ function createMofo(field) {
         mofo.appendChild(x)  
     }
     $$('body', 0).appendChild(mofo)
-    
+
+       
+    requestAnimationFrame(() => {
+        slideInMofo(mofo);
+    });
     
     return mofo;
 }
-
-function dropInMofo(m) {
-    let pos = parseInt(m.style.top)
+// animation
+function slideInMofo(m) {
+    let pos = parseInt(m.style.left)
     let opac = parseFloat(m.style.opacity)
-    if (pos < 0) {
-      m.style.top = pos + 1 + 'px';
+    if (pos < 120) {
+      m.style.left = pos + 2 + 'px';
       if (opac < 1) {
-        m.style.opacity = (opac + 0.01).toString();
-      }
-      
-      requestAnimationFrame(() => dropInMofo(m)) 
+        m.style.opacity = (opac + 0.02).toString();
+      }      
+      requestAnimationFrame(() => slideInMofo(m)) 
     }
     
 }
 
-// function disappearMofo(m) {
+// animation
+function disappearMofo(m) {
+    let opac = parseFloat(m.style.opacity);
+    let pos = parseInt(m.style.top)
     
-//     let opac = parseFloat(m.style.opacity)
+    if (pos < 400 ) {
+        m.style.top = pos + 10 + 'px';
+        if (opac > 0) {
+            m.style.opacity = (opac - 0.05).toString();
+        }
     
-//     if (opac > 0) {
-//     m.style.opacity = (opac - 0.01).toString();
-//     }
+    requestAnimationFrame(() => disappearMofo(m));
+    } else {
+        m.parentNode.removeChild(m);
+    }
     
-//     requestAnimationFrame(() => disappearMofo(m)) 
-//     }
+}
     
 
 function newSelection() {
-    console.log("new selection:", this.parentNode.firstChild.firstChild, this.value)
+    // console.log("new selection:", this.parentNode.firstChild.firstChild, this.value)
     if (this.parentNode.nextSibling) {
         deleteMofos(this)
     }
-    
-    createMofo(dataset[this.value])
-    // createMofo(this.value, this.parentNode)
-    
-}
-function deleteMofos(node) {
-        
-        let nextMofo = node.parentNode.nextSibling; 
-        while (nextMofo) {
-            // body removes any mofo divs created by previous options and stops at current mofo
-            if(node.parentNode == $$('body', 0).lastChild) {
-                break;
-            }
-            disappearMofo(nextMofo)
-            $$('body', 0).removeChild(nextMofo)
-            console.log(node.parentNode.parentNode)
-            deleteMofos(node)
-        }
-        
+    let label = this.parentNode.firstChild.textContent;
+    localStorage.setItem(label, this.value)
+    currentChoices.push(this.parentNode.firstChild.firstChild)
+    console.log("currentChoices:" + currentChoices)
+
+    createMofo(dataset[this.value])   
 }
 
+
+function deleteMofos(node) {
+    let nextMofo = node.parentNode.nextSibling; 
+    while (nextMofo) {
+        disappearMofo(nextMofo);     
+        nextMofo = nextMofo.nextSibling; 
+    }
+}
+function createHeader(title) {
+    let header = $cet('h1', title)
+    header.setAttribute('class', 'header')
+    $$('body', 0).appendChild(header)
+}
 function init() {
-    dataset = dataFootball;
+    dataset = dataTechStore;
+    createHeader(dataset.title);
     createMofo(dataset.init);
     createCSS(dataset.css);
 }
