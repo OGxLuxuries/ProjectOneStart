@@ -1,35 +1,32 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Freeman&display=swap');
 
 body {
     background-image: url("alex-ai.jpg");
-    font-family: "Russo One", sans-serif;
-    font-weight: 400;
+    font-family: "Freeman", sans-serif;
+    font-weight: 200;
     font-style: normal;
 }
 
 .mofo {
-    width: 310px;
+    width: 300px;
     border-radius: 5px;
-    background-color: grey;
+    background-color: rgb(45, 182, 220);
     text-align: center;
-    border: 2px solid lightskyblue;
 
 }
 .mofo h1 {
-    
-    font-size: 24px;
-    margin-top: 1em;
+    color: white;
 }
 
 select {
     width: 80%;
     padding: 10px;
     font-size: 16px;
-    background-color: grey; 
-    border: 2px solid lightskyblue; 
+    background-color: #f8f9fa; 
+    border: 2px solid rgb(20, 44, 154); 
     border-radius: 5px;
-    color: #495057; 
+    color: rgb(0, 157, 255); 
     cursor: pointer;
     transition: border-color 0.3s, background-color 0.3s;
     margin-bottom: 10px;

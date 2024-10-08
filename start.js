@@ -71,15 +71,15 @@ let dataTechStore = {
     
     // Smartphones category
     Smartphones: ['Smartphone Brand', '', 'Apple', 'Samsung', 'Google'],
-    'Apple Smartphone': ['Model', '', 'iPhone 12', 'iPhone 13', 'iPhone 14'],
-    'Samsung Smartphone': ['Model', '', 'Galaxy S21', 'Galaxy Note 20', 'Galaxy Z Fold'],
-    'Google Smartphone': ['Model', '', 'Pixel 6', 'Pixel 5', 'Pixel 4a'],
+    'Apple': ['Model', '', 'iPhone 12', 'iPhone 13', 'iPhone 14'],
+    'Samsung': ['Model', '', 'Galaxy S21', 'Galaxy Note 20', 'Galaxy Z Fold'],
+    'Google': ['Model', '', 'Pixel 6', 'Pixel 5', 'Pixel 4a'],
     
     // Tablets category
     Tablets: ['Tablet Brand', '', 'Apple', 'Samsung', 'Microsoft'],
-    'Apple Tablet': ['Model', '', 'iPad', 'iPad Pro', 'iPad Air'],
-    'Samsung Tablet': ['Model', '', 'Galaxy Tab S7', 'Galaxy Tab A7'],
-    'Microsoft Tablet': ['Model', '', 'Surface Pro 7', 'Surface Go 2'],
+    'Apple': ['Model', '', 'iPad', 'iPad Pro', 'iPad Air'],
+    'Samsung': ['Model', '', 'Galaxy Tab S7', 'Galaxy Tab A7'],
+    'Microsoft': ['Model', '', 'Surface Pro 7', 'Surface Go 2'],
     
     // Accessories category
     Accessories: ['Accessory Type', '', 'Headphones', 'Chargers', 'Cases'],
@@ -96,13 +96,11 @@ function createCSS(path) {
     $$('head', 0).appendChild(sheet)
 }
 
-function createMofo(field) {
+function createMofo(field, isAnimated = true) {
     let mofo = $ce('div')
     mofo.setAttribute("class", "mofo")
     mofo.style.position = 'relative';
-    mofo.style.left = -375 + 'px';
-    mofo.style.top = 0 + 'px';
-    mofo.style.opacity = 0.1;     
+      
         
     if (field) {
         let h = $cet("h1", field[0]);
@@ -117,10 +115,16 @@ function createMofo(field) {
     }
     $$('body', 0).appendChild(mofo)
 
-       
-    requestAnimationFrame(() => {
-        slideInMofo(mofo);
-    });
+    if (isAnimated) {
+        mofo.style.left = -375 + 'px';
+        // mofo.style.top = 20 + 'px';
+        mofo.style.opacity = 0.1;
+           
+        requestAnimationFrame(() => {
+            slideInMofo(mofo);
+        });
+    }
+    
     
     return mofo;
 }
@@ -128,7 +132,7 @@ function createMofo(field) {
 function slideInMofo(m) {
     let pos = parseInt(m.style.left)
     let opac = parseFloat(m.style.opacity)
-    if (pos < 120) {
+    if (pos < 0) {
       m.style.left = pos + 2 + 'px';
       if (opac < 1) {
         m.style.opacity = (opac + 0.02).toString();
@@ -186,6 +190,6 @@ function createHeader(title) {
 function init() {
     dataset = dataTechStore;
     createHeader(dataset.title);
-    createMofo(dataset.init);
+    createMofo(dataset.init, false);
     createCSS(dataset.css);
 }
