@@ -117,6 +117,7 @@ function createMofo(field, isAnimated = true) {
         mofo.appendChild(h)
         let x = $ce('select', '');
         x.onchange = newSelection;
+        // x.setAttribute('onchange', newSelection)
         for (let i = 1; i < field.length; i++) {          
             let y = $cet('option', field[i])
             x.appendChild(y)
@@ -178,9 +179,9 @@ function newSelection() {
     if (this.parentNode.nextSibling) {
         deleteMofos(this)
     }
-    let label = this.parentNode.firstChild.textContent;
+    let label = this.parentNode.firstChild.firstChild.nodeValue;
     localStorage.setItem(label, this.value)
-    currentChoices.push(this.parentNode.firstChild.firstChild)
+    currentChoices.push(label.toString());
     console.log("currentChoices:" + currentChoices)
 
     createMofo(dataset[this.value])   
@@ -196,7 +197,7 @@ function deleteMofos(node) {
     while (nextMofo) {
         let mofoToRemove = nextMofo;  
         nextMofo = nextMofo.nextSibling;  
-        try {localStorage.removeItem(mofoToRemove.firstChild.textContent)}
+        try {localStorage.removeItem(mofoToRemove.firstChild.firstChild.nodeValue)}
         catch (err) {console.log(err)}
         disappearMofo(mofoToRemove); 
     }
@@ -218,11 +219,7 @@ function createHeader(title) {
 function createForm() {
     let form = $ce('form'); 
     form.setAttribute('id', 'form')
-    form.onsubmit = () => {
-        localStorage.clear();
-        location.reload();
-        
-    };
+    
     let formHeader = $cet('h1', 'Your Order')
     
     let nameLabel = $cet('label', 'Sign Here: ');
@@ -245,19 +242,27 @@ function createForm() {
     emailInput.setAttribute('placeholder', 'Enter your email');
 
     
-    let submitButton = $ce('button');
+    let submitButton = $cet('button', "Submit & Refresh");
     submitButton.setAttribute('type', 'submit');
-    submitButton.textContent = 'Submit & Refresh';
+
+   
 
     form.appendChild(formHeader)
 
-    // for loop with localStorage
+    // for loop with localStorage to get choices 
     for (let i = 0; i < localStorage.length; i++) {
         let name = localStorage.key(i); 
         let value = localStorage.getItem(name);        
         let choice = $cet('p', name + ": " + value);
         form.appendChild(choice);
     }
+    form.onsubmit = (event) => {
+        event.preventDefault();
+        SetCookie("email", emailInput.value, 604800); // 7 days in seconds
+        SetCookie("name", nameInput.value, 604800); // 7 days in seconds
+        localStorage.clear();
+        location.reload();
+    };
     
     
 
