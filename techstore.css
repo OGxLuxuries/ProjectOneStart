@@ -8,12 +8,8 @@ body {
     font-style: normal;
 }
 
-.mofo {
-    width: 300px;
-    border-radius: 5px;
-    background-color: rgb(45, 182, 220);
-    text-align: center;
-
+.mofo {    
+    background-color: rgb(45, 182, 220);   
 }
 .mofo h1 {
     color: white;

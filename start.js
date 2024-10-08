@@ -96,6 +96,15 @@ function createCSS(path) {
     $$('head', 0).appendChild(sheet)
 }
 
+function createLayout() {
+    let hflex = $ce('section')
+    hflex.setAttribute('id', 'hflex')
+    let vflex = $ce('section')
+    vflex.setAttribute('id', 'vflex')
+    hflex.appendChild(vflex)
+    $$('body', 0).appendChild(hflex)
+}
+
 function createMofo(field, isAnimated = true) {
     let mofo = $ce('div')
     mofo.setAttribute("class", "mofo")
@@ -113,11 +122,10 @@ function createMofo(field, isAnimated = true) {
         }
         mofo.appendChild(x)  
     }
-    $$('body', 0).appendChild(mofo)
+    $('vflex').appendChild(mofo)
 
     if (isAnimated) {
         mofo.style.left = -375 + 'px';
-        // mofo.style.top = 20 + 'px';
         mofo.style.opacity = 0.1;
            
         requestAnimationFrame(() => {
@@ -187,9 +195,52 @@ function createHeader(title) {
     header.setAttribute('class', 'header')
     $$('body', 0).appendChild(header)
 }
+
+function createForm() {
+    let form = $ce('form'); // Create form element
+    
+    // Create name label and input
+    let nameLabel = $cet('label', 'Name:');
+    nameLabel.setAttribute('for', 'nameInput');
+    let nameInput = $ce('input');
+    nameInput.setAttribute('type', 'text');
+    nameInput.setAttribute('id', 'nameInput');
+    nameInput.setAttribute('name', 'name');
+    nameInput.setAttribute('placeholder', 'Enter your name');
+    
+    // Create email label and input
+    let emailLabel = $cet('label', 'Email:');
+    emailLabel.setAttribute('for', 'emailInput');
+    let emailInput = $ce('input');
+    emailInput.setAttribute('type', 'email');
+    emailInput.setAttribute('id', 'emailInput');
+    emailInput.setAttribute('name', 'email');
+    emailInput.setAttribute('placeholder', 'Enter your email');
+
+    // Create submit button
+    let submitButton = $ce('button');
+    submitButton.setAttribute('type', 'submit');
+    submitButton.textContent = 'Submit';
+
+    // Append elements to the form
+    form.appendChild(nameLabel);
+    form.appendChild(nameInput);
+    form.appendChild(document.createElement('br')); // Line break for spacing
+    form.appendChild(emailLabel);
+    form.appendChild(emailInput);
+    form.appendChild(document.createElement('br')); // Line break for spacing
+    form.appendChild(submitButton);
+
+    form.setAttribute('id', 'form')
+    // Append form to the body or another container
+    $('hflex').appendChild(form);
+}
+
 function init() {
     dataset = dataTechStore;
     createHeader(dataset.title);
+    createLayout()
+    createForm()
     createMofo(dataset.init, false);
     createCSS(dataset.css);
 }

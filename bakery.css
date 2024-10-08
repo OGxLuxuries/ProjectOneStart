@@ -10,12 +10,9 @@ body {
 }
 
 .mofo {
-    width: 300px;
-    border-radius: 5px;
     background-color: bisque;
-    text-align: center;
-
-}
+    
+   }
 .mofo h1 {
     color: rgb(193, 141, 73);
 }
