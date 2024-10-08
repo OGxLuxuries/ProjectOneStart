@@ -20,8 +20,9 @@ body {
     
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     column-gap: 20vw;
+    width: 80vw;
     
 }
 #vflex {
@@ -37,6 +38,7 @@ body {
     box-shadow: 2px 2px 10px 4px rgba(73, 80, 87, 0.6);
     border-radius: 5px;
     padding: 1em;
+    width: 30vw;
 
 }
 .header {
