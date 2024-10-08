@@ -170,7 +170,10 @@ function disappearMofo(m) {
     
 
 function newSelection() {
-    // console.log("new selection:", this.parentNode.firstChild.firstChild, this.value)
+    if ($('form')) {
+        $('hflex').removeChild($('form'))
+    } 
+
     if (this.parentNode.nextSibling) {
         deleteMofos(this)
     }
@@ -180,6 +183,10 @@ function newSelection() {
     console.log("currentChoices:" + currentChoices)
 
     createMofo(dataset[this.value])   
+
+    if (!dataset[this.value]) {
+        createForm()
+    }
 }
 
 
@@ -188,7 +195,8 @@ function deleteMofos(node) {
     while (nextMofo) {
         let mofoToRemove = nextMofo;  
         nextMofo = nextMofo.nextSibling;  
-        localStorage.removeItem(mofoToRemove.firstChild.textContent)
+        try {localStorage.removeItem(mofoToRemove.firstChild.textContent)}
+        catch (err) {console.log(err)}
         disappearMofo(mofoToRemove); 
     }
 }
@@ -203,7 +211,7 @@ function createForm() {
     let form = $ce('form'); 
     let formHeader = $cet('h1', 'Your Order')
     
-    let nameLabel = $cet('label', 'Name:');
+    let nameLabel = $cet('label', 'Sign Here: ');
     nameLabel.setAttribute('for', 'nameInput');
 
     let nameInput = $ce('input');
@@ -213,7 +221,7 @@ function createForm() {
     nameInput.setAttribute('placeholder', 'Enter your name');
     
     
-    let emailLabel = $cet('label', 'Email:');
+    let emailLabel = $cet('label', 'Email: ');
     emailLabel.setAttribute('for', 'emailInput');
 
     let emailInput = $ce('input');
@@ -230,6 +238,14 @@ function createForm() {
     form.appendChild(formHeader)
 
     // for loop with localStorage
+    for (let i = 0; i < localStorage.length; i++) {
+        let name = localStorage.key(i); 
+        let value = localStorage.getItem(name);        
+        let choice = $cet('p', name + ": " + value);
+        form.appendChild(choice);
+    }
+    
+    
 
     form.appendChild(nameLabel);
     form.appendChild(nameInput);
@@ -248,7 +264,7 @@ function init() {
     dataset = dataTechStore;
     createHeader(dataset.title);
     createLayout()
-    createForm()
+    
     createMofo(dataset.init, false);
     createCSS(dataset.css);
 }
