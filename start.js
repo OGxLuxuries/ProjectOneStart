@@ -184,12 +184,15 @@ function newSelection() {
 
 
 function deleteMofos(node) {
-    let nextMofo = node.parentNode.nextSibling; 
+    let nextMofo = node.parentNode.nextSibling;
     while (nextMofo) {
-        disappearMofo(nextMofo);     
-        nextMofo = nextMofo.nextSibling; 
+        let mofoToRemove = nextMofo;  
+        nextMofo = nextMofo.nextSibling;  
+        localStorage.removeItem(mofoToRemove.firstChild.textContent)
+        disappearMofo(mofoToRemove); 
     }
 }
+
 function createHeader(title) {
     let header = $cet('h1', title)
     header.setAttribute('class', 'header')
@@ -198,7 +201,7 @@ function createHeader(title) {
 
 function createForm() {
     let form = $ce('form'); 
-    
+    let formHeader = $cet('h1', 'Your Order')
     
     let nameLabel = $cet('label', 'Name:');
     nameLabel.setAttribute('for', 'nameInput');
@@ -224,7 +227,10 @@ function createForm() {
     submitButton.setAttribute('type', 'submit');
     submitButton.textContent = 'Submit';
 
-    
+    form.appendChild(formHeader)
+
+    // for loop with localStorage
+
     form.appendChild(nameLabel);
     form.appendChild(nameInput);
     form.appendChild(document.createElement('br')); 
@@ -239,7 +245,7 @@ function createForm() {
 }
 
 function init() {
-    dataset = dataBakery;
+    dataset = dataTechStore;
     createHeader(dataset.title);
     createLayout()
     createForm()
