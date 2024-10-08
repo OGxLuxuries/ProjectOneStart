@@ -23,6 +23,7 @@ function $cet(ele, txt) {
 let dataset = {};
 let currentChoices = []; 
 
+
 let dataBakery = {
     css: "bakery.css",
     init: ['Carb Category', '', 'Bread', 'Pastries', 'Cakes', 'Cupcakes'],
@@ -204,6 +205,13 @@ function deleteMofos(node) {
 function createHeader(title) {
     let header = $cet('h1', title)
     header.setAttribute('class', 'header')
+    
+    let butt = $cet('button', 'switch data')
+    butt.onclick = () => {
+        console.log("switch button pressed")
+    }
+    header.appendChild(butt)
+    
     $$('body', 0).appendChild(header)
 }
 
@@ -266,11 +274,14 @@ function createForm() {
     $('hflex').appendChild(form);
 }
 
-function init() {
-    dataset = dataTechStore;
-    createHeader(dataset.title);
-    createLayout()
+// set dataset here
+function init(x) {
     
+    dataset = dataTechStore
+       
+    localStorage.clear()
+    createHeader(dataset.title);
+    createLayout()    
     createMofo(dataset.init, false);
     createCSS(dataset.css);
 }
