@@ -209,6 +209,12 @@ function createHeader(title) {
 
 function createForm() {
     let form = $ce('form'); 
+    form.setAttribute('id', 'form')
+    form.onsubmit = () => {
+        localStorage.clear();
+        location.reload();
+        
+    };
     let formHeader = $cet('h1', 'Your Order')
     
     let nameLabel = $cet('label', 'Sign Here: ');
@@ -233,7 +239,7 @@ function createForm() {
     
     let submitButton = $ce('button');
     submitButton.setAttribute('type', 'submit');
-    submitButton.textContent = 'Submit';
+    submitButton.textContent = 'Submit & Refresh';
 
     form.appendChild(formHeader)
 
@@ -255,7 +261,7 @@ function createForm() {
     form.appendChild(document.createElement('br')); 
     form.appendChild(submitButton);
 
-    form.setAttribute('id', 'form')
+    
     
     $('hflex').appendChild(form);
 }
