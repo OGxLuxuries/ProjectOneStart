@@ -324,6 +324,10 @@ function init(x) {
     dataset = x
     
     localStorage.clear()
+    let body = $$('body', 0)
+    while (body.firstChild) {
+        body.removeChild(body.firstChild)
+    }
     createCSS(dataset.css);
     createHeader(dataset.title);
     createLayout()
