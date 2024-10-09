@@ -244,7 +244,7 @@ function createForm() {
     emailInput.setAttribute('name', 'email');
     emailInput.setAttribute('placeholder', 'Enter your email');
     if (GetCookie('email')) {
-        nameInput.value = GetCookie('email')
+        emailInput.value = GetCookie('email')
     }
 
     
