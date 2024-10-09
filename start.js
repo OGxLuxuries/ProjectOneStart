@@ -230,6 +230,9 @@ function createForm() {
     nameInput.setAttribute('id', 'nameInput');
     nameInput.setAttribute('name', 'name');
     nameInput.setAttribute('placeholder', 'Enter your name');
+    if (GetCookie('name')) {
+        nameInput.value = GetCookie('name')
+    }
     
     
     let emailLabel = $cet('label', 'Email: ');
@@ -240,6 +243,9 @@ function createForm() {
     emailInput.setAttribute('id', 'emailInput');
     emailInput.setAttribute('name', 'email');
     emailInput.setAttribute('placeholder', 'Enter your email');
+    if (GetCookie('email')) {
+        nameInput.value = GetCookie('email')
+    }
 
     
     let submitButton = $cet('button', "Submit & Refresh");
@@ -262,8 +268,10 @@ function createForm() {
         SetCookie("email", emailInput.value, 604800); // 7 days in seconds
         SetCookie("name", nameInput.value, 604800); // 7 days in seconds
         localStorage.clear();
-        location.reload();
-        return validate()
+        if (validate()) {
+            location.reload()
+        }
+        
     };
     
     
@@ -282,11 +290,22 @@ function createForm() {
 }
 
 function validate() {
-    // if validation passes 
-    let checkName = document.getElementsByTagName('form')[0].getElementsByTagName('input')[0].nodeValue;
-    let checkEmail = document.getElementsByTagName('form')[0].getElementsByTagName('input')[0].nodeValue
-    return checkName && checkEmail;
+    
+    const inputs = form.getElementsByTagName('input');
+    let isValid = true;
+
+    for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].value.trim() === '') {
+            inputs[i].style.border = '2px solid red';
+            isValid = false; 
+        } else {
+            inputs[i].style.border = '';
+        }
+    }
+
+    return isValid;
 }
+
 
 // set dataset here
 function init(x) {
