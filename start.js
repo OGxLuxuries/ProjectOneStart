@@ -1,21 +1,25 @@
 
-//draw init data SOM, then call function so error doesnt throw
+//shortcut function
 function $(id) {
     return document.getElementById(id)
   }
 
+//shortcut function
 function $$(ele, index) {
     return document.getElementsByTagName(ele)[index];
 }
+//shortcut function
 function $ce(ele) {
     return document.createElement(ele)
 }
+//shortcut function
 function $cet(ele, txt) {
     let temp = document.createElement(ele)
     temp.appendChild($ctn(txt))
     return temp;
 }
 
+//shortcut function
   function $ctn(string) {
       return document.createTextNode(string);
   }
@@ -58,7 +62,6 @@ let dataBakery = {
 };
 
 
-
 let dataTechStore = {
     css: "techstore.css",
     init: ['Product Category', '', 'Laptops', 'Smartphones', 'Tablets', 'Accessories'],
@@ -89,7 +92,7 @@ let dataTechStore = {
     Cases: ['Device', '', 'Laptop Case', 'Phone Case', 'Tablet Case'],
 };
 
-
+// create CSS taliored to dataset
 function createCSS(path) {
     let sheet = $ce('link')
     sheet.setAttribute('rel', 'stylesheet')
@@ -97,6 +100,7 @@ function createCSS(path) {
     $$('head', 0).appendChild(sheet)
 }
 
+// simple flexbox layouts for organization
 function createLayout() {
     let hflex = $ce('section')
     hflex.setAttribute('id', 'hflex')
@@ -106,6 +110,7 @@ function createLayout() {
     $$('body', 0).appendChild(hflex)
 }
 
+// div constructor with dynamic element creation
 function createMofo(field, isAnimated = true) {
     let mofo = $ce('div')
     mofo.setAttribute("class", "mofo")
@@ -170,7 +175,7 @@ function disappearMofo(m) {
     
 }
     
-
+// anytime a select onchange fires
 function newSelection() {
     if ($('form')) {
         $('hflex').removeChild($('form'))
@@ -191,7 +196,7 @@ function newSelection() {
     }
 }
 
-
+// delete Mofos
 function deleteMofos(node) {
     let nextMofo = node.parentNode.nextSibling;
     while (nextMofo) {
@@ -202,20 +207,26 @@ function deleteMofos(node) {
         disappearMofo(mofoToRemove); 
     }
 }
-
+// creates header based on data set
 function createHeader(title) {
+    if ($$('h1', 0)) {
+        $$('body', 0).removeChild($$('h1', 0))
+    }
     let header = $cet('h1', title)
     header.setAttribute('class', 'header')
     
     let butt = $cet('button', 'switch data')
     butt.onclick = () => {
-        console.log("switch button pressed")
+        dataset = dataTechStore
+        init(dataTechStore)
+
     }
     header.appendChild(butt)
     
-    $$('body', 0).appendChild(header)
-}
+    $$('body', 0).insertBefore(header, $$('body', 0).firstChild);
 
+}
+// dynamic form creation with select option listed 
 function createForm() {
     let form = $ce('form'); 
     form.setAttribute('id', 'form')
@@ -287,6 +298,7 @@ function createForm() {
     $('hflex').appendChild(form);
 }
 
+// javascript form validation 
 function validate() {
     
     const inputs = form.getElementsByTagName('input');
@@ -298,22 +310,26 @@ function validate() {
             isValid = false; 
         } else {
             inputs[i].style.border = '';
-            location.reload()
+            
         }
     }
-
+    if (isValid) {
+        location.reload()
+    }
     return isValid;
 }
 
-
-// set dataset here
+// starts up with databakery set in index
 function init(x) {
+    dataset = x
     
-    dataset = dataTechStore
-       
     localStorage.clear()
-    createHeader(dataset.title);
-    createLayout()    
-    createMofo(dataset.init, false);
     createCSS(dataset.css);
+    createHeader(dataset.title);
+    createLayout()
+    if ($('vflex').firstChild) {
+        $('vflex').removeChild($('vflex').firstChild)
+    }    
+    createMofo(dataset.init, false);
+    
 }
