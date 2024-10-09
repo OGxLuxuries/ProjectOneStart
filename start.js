@@ -268,10 +268,8 @@ function createForm() {
         SetCookie("email", emailInput.value, 604800); // 7 days in seconds
         SetCookie("name", nameInput.value, 604800); // 7 days in seconds
         localStorage.clear();
-        if (validate()) {
-            location.reload()
-        }
         
+        return validate();
     };
     
     
@@ -300,6 +298,7 @@ function validate() {
             isValid = false; 
         } else {
             inputs[i].style.border = '';
+            location.reload()
         }
     }
 
