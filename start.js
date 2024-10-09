@@ -258,10 +258,12 @@ function createForm() {
     }
     form.onsubmit = (event) => {
         event.preventDefault();
+        
         SetCookie("email", emailInput.value, 604800); // 7 days in seconds
         SetCookie("name", nameInput.value, 604800); // 7 days in seconds
         localStorage.clear();
         location.reload();
+        return validate()
     };
     
     
@@ -277,6 +279,13 @@ function createForm() {
     
     
     $('hflex').appendChild(form);
+}
+
+function validate() {
+    // if validation passes 
+    let checkName = document.getElementsByTagName('form')[0].getElementsByTagName('input')[0].nodeValue;
+    let checkEmail = document.getElementsByTagName('form')[0].getElementsByTagName('input')[0].nodeValue
+    return checkName && checkEmail;
 }
 
 // set dataset here
